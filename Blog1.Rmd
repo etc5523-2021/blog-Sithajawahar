@@ -108,12 +108,15 @@ bel %>%  DT::datatable(rownames = FALSE,
 
 ```{r}
 
-google <- read_csv("Data/Global_Mobility_Report.csv")
+google <- read_excel("Data/Global_Mobility_Report.xlsx")
 
 google_clean <- google %>% 
   filter(country_region == "Belgium") %>% 
-    select(c("country_region",
-           "date",
+mutate(month = month(date, label = TRUE), year = year(date)) %>%
+  arrange(year) %>% 
+select(c("country_region",
+           "month",
+           "year",
            "retail_and_recreation_percent_change_from_baseline",
            "grocery_and_pharmacy_percent_change_from_baseline",
            "parks_percent_change_from_baseline",
@@ -125,9 +128,7 @@ google_clean <- google %>%
             grocery_pharma = grocery_and_pharmacy_percent_change_from_baseline,
             parks = parks_percent_change_from_baseline,
             transit_stations = transit_stations_percent_change_from_baseline,
-            work = workplaces_percent_change_from_baseline) %>%
-            mutate(month = month(date, label = TRUE), year = year(date)) %>% 
-           arrange(year)
+            work = workplaces_percent_change_from_baseline) 
 
  google_clean[is.na(google_clean)] <- 0
 
