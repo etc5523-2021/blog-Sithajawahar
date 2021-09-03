@@ -1,0 +1,21 @@
+html {
+
+  --title-size:      70px;
+  --body-size:       1.2rem;
+  --aside-size:      12px;
+  --fig-cap-size:    15px;
+
+  --heading-font:    font-family: 'Open Sans', sans-serif;
+  --body-font:       font-family: 'Noto Sans JP', sans-serif;
+  --navbar-font:     font-family: 'Open Sans', sans-serif;
+}
+
+
+d-article {
+  background-color: #FFF9F7
+  ;
+}
+
+d-article {
+  border-style: solid;
+}

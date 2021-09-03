@@ -1,5 +1,16 @@
 ---
-title: "My Blog"
-site: distill::distill_website
-listing: posts
+title: "ETC5523 Communicating with Data"
+description: "
+  First blog post for ETC5523"
+author:
+  - name: "Sithalakshmi"
+    affiliation: Monash University
+date: "`r Sys.Date()`"
+output: distill::distill_article
+
 ---
+
+```{r setup, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
