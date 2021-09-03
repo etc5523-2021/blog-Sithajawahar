@@ -1,16 +1,16 @@
 # My Blog
 
 
-This is the blog of [Sithalakshmi J].
-The URL of this blog is [].
+This is the blog of Sithalakshmi J.
+The URL of this blog is https://sitha-jawahar-blogpost.netlify.app/.
 
 ## Blog Post 1
 
 This assessment is due Fri Sep 3 2021 11.55PM AEST.
 
-My selected country is [Belgium].
+My selected country is Belgium.
 
-The relevant blog post for this assessment is in [FILL].html
+The relevant blog post for this assessment is in https://sitha-jawahar-blogpost.netlify.app/blog1.html
 
 - [ ] Selected a country
 - [ ] Website with R markdown 
