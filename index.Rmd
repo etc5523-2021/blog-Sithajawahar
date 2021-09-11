@@ -6,7 +6,9 @@ author:
   - name: "Sithalakshmi"
     affiliation: Monash University
 date: "`r Sys.Date()`"
-output: distill::distill_article
+site: distill::distill_website
+listing: posts
+
 
 ---
 
@@ -14,3 +16,4 @@ output: distill::distill_article
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Welcome to Sitha's Blog . ETC 5523 
