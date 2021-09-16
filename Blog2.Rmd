@@ -1,20 +1,21 @@
 ---
-title: "Japan"
-description: "Tokyo Olympics and COVID"
+title: "Debunking Conspiracies 101"
+description: "Is Japan as Healthy as it seems"
 date: "`r Sys.Date()`"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
+
+
 ```{css}
 .d-title {
-  background-image: url("images/flag.jpg");
+  background-image: url("../../images/flag.jpg");
   background-repeat: no-repeat;
   background-position: right;
 }
@@ -95,6 +96,11 @@ Japan is an island nation that in East Asia. It is one of the most literate and 
 
 
 # Olympics during a pandemic and its effects
+
+```{r}
+
+
+```
 
 
 ```{r, echo = F, out.width = '100%', fig.align='right', fig.height=12 , fig.width=15}
@@ -264,24 +270,26 @@ death_rate <- left_join(roads, covid) %>%
 
 dr1 <- pivot_longer(death_rate, 2:3, names_to = "event" , values_to = "totals") %>% 
   filter(year == "2020") %>% 
-  mutate(percentage =  round(totals / sum(totals)*100,2))
+  mutate(percentage =  round(totals / sum(totals)*100,2)) %>% 
+  mutate(column = paste(" "))
   
   
   
 dr2 <- pivot_longer(death_rate, 2:3, names_to = "event" , values_to = "totals") %>% 
   filter(year == "2021") %>% 
-  mutate(percentage =  round(totals / sum(totals)*100,2))
+  mutate(percentage =  round(totals / sum(totals)*100,2)) %>% 
+  mutate(column = paste(" "))
 
 # Plots
 
- a1 <- ggdonutchart(dr1, "totals", label = "event", 
+ a1 <- ggdonutchart(dr1, "totals", label = "column", 
       fill = "event", color = "white",
        palette = c("#E74C3C", "#F1948A", "#FC4E07"))+ ggtitle ("2020")+
     theme(legend.position = "bottom", legend.text = element_text(size = 15), legend.title = element_blank())+
     geom_label(aes(label = paste(percentage, "%", sep = "")), position = position_stack(vjust = 0.15))
  
  
-a2 <-  ggdonutchart(dr2, "totals", label = "event",
+a2 <-  ggdonutchart(dr2, "totals", label = "column",
       fill = "event", color = "grey",
        palette = c("#E74C3C", "#F1948A", "#FC4E07"))+ ggtitle ("2021")+
   theme(legend.position="none")+
