@@ -1,0 +1,14 @@
+.distill-site-nav {
+  background-color: #010101  ;
+  font-size: 30px;
+  font-family: Besley, serif;
+}
+
+
+.d-title {
+  background-image: url("images/google.gif");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 300px;
+}
+

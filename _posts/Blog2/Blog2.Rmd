@@ -93,7 +93,7 @@ p <- pivot_longer(japan_clean, cols = cases:deaths, names_to = "status", values_
 Right now, the world is facing a pandemic caused by the Corona virus. It is a virus that causes some kind of respiratory distress. The best way to protect oneself from contracting the virus is by staying away from crowded places, washing your hands or at least sanitizing them.
 
 
-Japan is an island nation that in East Asia. It is one of the most literate and technically advanced nations. This blog takes a look at different events and how it affected the biggest sporting event. 
+Japan is an island nation in East Asia. It is one of the most literate and technically advanced nations. This blog takes a look at different events and how COVID affected the biggest sporting event.  
 
 
 # Olympics during a pandemic and its effects
@@ -106,7 +106,7 @@ knitr::include_graphics("images/olympics.jpg")
 ```
 
 
-The 28th Summer Olympics games was held in Tokyo, Japan. It was an event that was supposed to happen in July 2020. Because of the pandemic and toll it took on people worldwide was so magnanimous that the biggest sporting event was postponed to July 2020. The plots below show how the different pieces to the virus changed between the two years. 
+The 28th Summer Olympic games was held in Tokyo, Japan. It was an event that was supposed to happen in July 2020. Because of the pandemic and the toll it took on people around the globe, was so magnanimous that the biggest sporting event was postponed to July 2020. The plots below show how the different pieces to the virus changed between the two years. 
 
 ```{r}
 
@@ -165,12 +165,12 @@ theme(panel.background = element_rect(fill = "#040405",
 
 This plot explains how Covid tests, cases and deaths have increased this year compared to last year. Vaccinations though have started only early this year thereby, not having showing anything for 2020. Even if the cases are on the rise, the fact that vaccinations are increasing at a higher rate is a positive sign for Japan. 
 
-Since a major part in the rise in cases is happening in 2021, is it related to the Olympics? Did the huge influx in athelets, volunteers, coaches, doctors et al. cause this rise?
+** Since a major part of the rise in cases is happening in 2021, is it related to the Olympics?** Did the huge influx in athletes, volunteers, coaches, doctors and such other personnel cause this rise?
 This is also a big question Japanese journalists are trying to address. 
 
 Since the games were supposed to be conducted last year, there have been personnel at the games village prepping for the actual event for over a year. The cases within persons involved in the games are higher this year than last for obvious reasons. 
 
-- The maximum cases were for the Contractors with almost 150 cases. They had the most chances for mobility within the country explainig the highest numbers. 
+- The maximum cases were for the Contractors with almost 300 cases in total. They had the most chances for mobility within the country explaining the highest numbers. 
 
 - Followed by athletes, coaches, physiotherapists, umpires and other such persons. This could also be because of travelling from various countries. 
 This however is puzzling because in both months the same number of people have been affected. 
@@ -224,7 +224,7 @@ knitr::include_graphics("images/story2.png")
 ```
 
 
-Japan is the longest - lived country. This was identified international comparison of recent mortality statistics. Making heart diseases and other major health issues a non-issue. But there are the two inevitable forms of fatalities, pandemics and road accidents. This part of the blog compares the number of deaths cause by accidents and covid. 
+Japan is the longest - lived country. This was identified international comparison of recent mortality statistics. Making heart diseases and other major health issues a non-issue. But there are the two inevitable forms of fatalities, pandemics and road accidents. This part of the blog compares the number of deaths caused by accidents and Covid. 
 The first plot, simply shows the trend of how many fatalities happens for every occurrence. 
 
 
@@ -291,7 +291,7 @@ a2 <-  ggdonutchart(dr2, "totals", label = "column",
 
 
 
-These donut charts are talking about the the proportion of deaths in comparison to road accidents and Covid. In 2020, when the cases were still low, it can be observed that the ratio of cause of death is almost similar. 
+These donut charts are talking about the the proportion of deaths in term of road accidents and Covid. In 2020, when the cases were still low, it can be observed that the ratio of cause of death is almost similar. 
 But in 2021, with the cases on the rise, the ratio has completely changed. This is also evident because, as cases rise people will stay at home causing fewer people to be about on the road. 
 
 But if lock down is taken out the picture for just a moment, that change in ratio over a year is surprising.  
@@ -337,11 +337,15 @@ Garrett Grolemund, Hadley Wickham (2011). Dates and Times Made Easy with lubrida
 
 ## Refernces
 
-https://www.usnews.com/news/best-countries/japan. 2021.  <https://www.usnews.com/news/best-countries/japan> 
+ Htmlcolorcodes.com. 2021. <https://htmlcolorcodes.com/>
 
-Who.int. 2021. Coronavirus. <https://www.who.int/health-topics/coronavirus#tab=tab_1> 
+ https://www.usnews.com/news/best-countries/japan. 2021.  <https://www.usnews.com/news/best-countries/japan> 
 
-https://www.nature.com/articles/s41430-020-0677-5
+ Who.int. 2021. Coronavirus. <https://www.who.int/health-topics/coronavirus#tab=tab_1> 
+
+ https://www.nature.com/articles/s41430-020-0677-5
+ 
+ W3schools.com. 2021. CSS Multiple Backgrounds. <https://www.w3schools.com/css/css3_backgrounds.asp> 
 
 
 

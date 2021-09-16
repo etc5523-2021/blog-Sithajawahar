@@ -9,6 +9,7 @@ The URL of this blog is https://sitha-jawahar-blogpost.netlify.app/.
 This assessment is due Fri Sep 3 2021 11.55PM AEST.
 
 My selected country is Belgium.
+Mu selected country is Japan
 
 The relevant blog post for this assessment is in https://sitha-jawahar-blogpost.netlify.app/blog1.html
 
