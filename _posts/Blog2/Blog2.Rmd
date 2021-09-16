@@ -4,29 +4,329 @@ description: "Tokyo Olympics and COVID"
 date: "`r Sys.Date()`"
 output:
   distill::distill_article:
-    theme: theme.css
+    self_contained: false
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{css}
+.d-title {
+  background-image: url("images/flag.jpg");
+  background-repeat: no-repeat;
+  background-position: right;
+}
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+<style>
+body {
+  background-color: off white;
+}
+h1 {
+  color: Red;
+  padding: 15px;
+  font-family:'Noto Sans', sans-serif;
+}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+h2 {
+  color: #DD7C73;
+  padding: 15px;
+  font-family:'Noto Sans', sans-serif; 
+}
+
+
+p {
+  font-family:Inter', sans-serif;
+  font-size: 11pt;
+}
+
+</style>
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(ggcharts)
+library(ggplot2)
+library(readxl)
+library(ggpubr)
+library(hrbrthemes)
+library(gridExtra)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+```{r}
+
+japan <- readr::read_csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv") %>% 
+  filter(location == "Japan") 
+
+
+```
+
+
+```{r}
+
+japan_clean <- japan %>%
+  select(location, date, new_cases, new_deaths) %>% 
+  mutate(month = month(date, label = TRUE)) %>% 
+  mutate(year = year(date)) %>% 
+  rename(cases = "new_cases",
+         deaths = "new_deaths")
+
+
+p <- pivot_longer(japan_clean, cols = cases:deaths, names_to = "status", values_to = "people")
+
+
+
+
+```
+
+## Introduction 
+
+
+Right now, the world is facing a pandemic caused by the Corona virus. It is a virus that causes some kind of respiratory distress. The best way to protect oneself from contracting the virus is by staying away from crowded places, washing your hands or at least sanitizing them.
+
+
+Japan is an island nation that in East Asia. It is one of the most literate and technically advanced nations. This blog takes a look at different events and how it affected the biggest sporting event. 
+
+
+# Olympics during a pandemic and its effects
+
+```{r}
+
+
+```
+
+
+```{r, echo = F, out.width = '100%', fig.align='right', fig.height=12 , fig.width=15}
+
+knitr::include_graphics("images/olympics.jpg")
+
+```
+
+
+The 28th Summer Olympics games was held in Tokyo, Japan. It was an event that was supposed to happen in July 2020. Because of the pandemic and toll it took on people worldwide was so magnanimous that the biggest sporting event was postponed to July 2020. The plots below show how the different pieces to the virus changed between the two years. 
+
+```{r}
+
+
+
+japan1 <- japan %>% 
+  select(location, date, new_cases, new_deaths, new_tests, new_vaccinations) %>% 
+  mutate(year = year(date)) %>% 
+  group_by(year) %>% 
+  summarise(cases = sum(new_cases, na.rm = TRUE),
+            deaths= sum(new_deaths, na.rm = TRUE),
+            tests = sum(new_tests, na.rm = TRUE),
+            vaccinations = sum(new_vaccinations, na.rm = TRUE)) 
+ 
+
+
+p1 <- pivot_longer(japan1, cols = cases:vaccinations, names_to = "status", values_to = "people") %>%
+   filter(people > 0)
+
+# ggplot(p1, aes(x= date, y= people , color = status )) + geom_point()
+# ggplot(p1, aes(x= year, y= status, fill = people)) + 
+#   geom_col()+
+#   xlab("Weapon Type")+
+#   scale_fill_gradient(low="light blue", high="red")+
+#   theme(axis.text.x = element_text(angle=40, hjust=1))
+
+wide <- pivot_wider(p1, names_from = year, 
+              values_from = people) %>% 
+  rename(covid2020 = "2020",
+         covid2021 = "2021") %>% 
+  mutate(covid2020 = (covid2020/10000)) %>% 
+  mutate(covid2021= (covid2021/10000))
+
+
+data("wide")
+dumbbell_chart(
+  data = wide,
+  x = status,
+  y1 = covid2020,
+  y2 = covid2021,
+  point_colors = c("#FA2222", "white")) + 
+  scale_y_continuous(labels = scales::comma) + 
+labs(
+    x = NULL,
+    y = "Count of people affected (in 10000's)",
+  )+
+  
+  
+theme(plot.background = element_rect(fill = "#F1F1F1"))+
+theme(
+  panel.background = element_rect(fill = "#040405",
+                                colour = "lightblue",
+                                size = 0.5, linetype = "solid"),
+  panel.grid.major = element_line(size = 0.5, linetype = 'solid',
+                                colour = "blue"), 
+  panel.grid.minor = element_line(size = 0.25, linetype = 'solid',
+                                colour = "black")) +
+  scale_y_continuous(breaks = seq(0, 120000000, 50000000))+
+  scale_y_continuous(labels = scales::comma)+
+  ggtitle("Covid changes in numbers over the years")
+  
+
+```
+
+
+This plot explains how Covid tests, cases and deaths have increased this year compared to last year. Vaccinations though have started only early this year thereby, not having showing anything for 2020. Even if the cases are on the rise, the fact that vaccinations are increasing at a higher rate is a positive sign for Japan. 
+
+Since a major part in the rise in cases is happening in 2021, is it related to the Olympics? Did the huge influx in athelets, volunteers, coaches, doctors et al. cause this rise?
+This is also a big question Japanese journalists are trying to address. 
+
+Since the games were supposed to be conducted last year, there have been personnel at the games village prepping for the actual event for over a year. The cases within persons involved in the games are higher this year than last for obvious reasons. 
+
+- The maximum cases were for the Contractors with almost 150 cases. They had the most chances for mobility within the country explainig the highest numbers. 
+
+- Followed by athletes, coaches, physiotherapists, umpires and other such persons. This could also be because of travelling from various countries. 
+This however is puzzling because in both months the same number of people have been affected. 
+
+- With volunteers and media persons also having a few cases.  Somehow, the employees hired to set up the games were the least affected. But there were more cases in the latter part of the games. 
+
+
+```{r}
+
+olympics <- read_csv("Data/covid_olympics.csv") %>% 
+  select(- c("...2", 
+             "Total"))
+
+p2 <- pivot_longer(olympics, cols = 2:6, names_to = "category", values_to = "count") %>% 
+  na.omit() %>% 
+  filter(count > 0) %>% 
+  mutate(month = month(`Date of announcement`, label = TRUE)) %>% 
+  group_by(month, category) %>% 
+  summarise(count = sum(count)) %>% 
+  mutate(category = recode(category, `Games-concerned personnel` = "Players et.al")) %>% 
+  mutate(category = recode(category, `Tokyo 2020 Contractor` = "Contractors")) %>% 
+  mutate(category = recode(category, `Tokyo 2020 employee` = "Employees"))
+  
+
+   ggplot(p2 ,mapping=aes(x=reorder(category, count),y=count))+
+  geom_bar(stat="identity", position="dodge", aes(fill=month))+
+  ggtitle("Olympic personnel affected") + theme_classic() +
+  theme(panel.background = element_rect(fill = "#E5E8E8")) +
+  scale_fill_manual(values=c("#45B39D",
+                             "#B0C4DE"))+
+   theme(legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank())+
+  coord_flip() + xlab("Staff")
+ 
+   data("p2")
+pyramid_chart(data = p2, x = category, y = count, group = month,
+              bar_colors = c("#45B39D", "#B0C4DE"), 
+              title = "Olympic personnel affected") +
+    scale_y_continuous(labels = scales::comma)
+  
+
+```
+
+When looking at the larger picture, an event where more than 12,000 people were involved, there was just a little more than 500 cases (4%), which is proof that events can happen amidst a pandemic. The rise in cases in Tokyo might not be entirely related to the Olympics because the a majority of the people involved are now overseas in their home countries. 
+
+<hr style="height:0.5px;border-width:5%;color:black;background-color:gray">
+
+# Fatalities on the road and in the lungs
+
+```{r, echo = F,out.width = '100%', fig.align='right', fig.height=12 , fig.width=15}
+knitr::include_graphics("images/story2.png")
+```
+
+
+Japan is the longest - lived country. This was identified international comparison of recent mortality statistics. Making heart diseases and other major health issues a non-issue. But there are the two inevitable forms of fatalities, pandemics and road accidents. This part of the blog compares the number of deaths cause by accidents and covid. 
+The first plot, simply shows the trend of how many fatalities happens for every occurrence. 
+
+
+```{r}
+ 
+accidents <- read_excel("Data/accidents.xlsx")
+
+accidents_plot <- pivot_longer(accidents, 2:3, names_to = "occurence", values_to = "number") %>%
+  mutate(number = number / 100)
+
+```
+
+
+```{r, fig.cap="Causes of death"}
+
+roads <- accidents_plot %>% 
+  filter(occurence == "Deaths") %>% 
+  mutate(number = number * 100) %>%
+  filter(year > 2019)
+
+covid <- p1 %>% 
+  filter(status == "deaths") 
+
+#joining data sets
+
+death_rate <- left_join(roads, covid) %>% 
+  select(- c(status, occurence)) %>% 
+  rename(road_accidents = "number") %>% 
+  rename(covid = "people")
+
+dr1 <- pivot_longer(death_rate, 2:3, names_to = "event" , values_to = "totals") %>% 
+  filter(year == "2020") %>% 
+  mutate(percentage =  round(totals / sum(totals)*100,2))
+  
+  
+  
+dr2 <- pivot_longer(death_rate, 2:3, names_to = "event" , values_to = "totals") %>% 
+  filter(year == "2021") %>% 
+  mutate(percentage =  round(totals / sum(totals)*100,2))
+
+# Plots
+
+ a1 <- ggdonutchart(dr1, "totals", label = "event", 
+      fill = "event", color = "white",
+       palette = c("#E74C3C", "#F1948A", "#FC4E07"))+ ggtitle ("2020")+
+    theme(legend.position = "bottom", legend.text = element_text(size = 15), legend.title = element_blank())+
+    geom_label(aes(label = paste(percentage, "%", sep = "")), position = position_stack(vjust = 0.15))
+ 
+ 
+a2 <-  ggdonutchart(dr2, "totals", label = "event",
+      fill = "event", color = "grey",
+       palette = c("#E74C3C", "#F1948A", "#FC4E07"))+ ggtitle ("2021")+
+  theme(legend.position="none")+
+   geom_label(aes(label = paste(percentage, "%", sep = "")), position = position_stack(vjust = 0.5))
+   
+ grid.arrange(a1, a2, ncol = 2)
+   
+  # mutate(event = recode(event, road_accidents = "Accidents")) %>% 
+
+
+```
+
+
+
+These donut charts are talking about the the proportion of deaths in comparison to road accidents and Covid. In 2020, when the cases were still low, it can be observed that the ratio of cause of death is almost similar. 
+But in 2021, with the cases on the rise, the ratio has completely changed. This is also evident because, as cases rise people will stay at home causing fewer people to be about on the road. 
+
+But if lock down is taken out the picture for just a moment, that change in ratio over a year is surprising.  
+
+
+# Bibliography
+
+## Packages
+
+
+
+## Data
+
+ Ritchie, H., Mathieu, E., Rodés-Guirao, L., Appel, C., Giattino, C., Ortiz-Ospina, E., Hasell, J., Macdonald, B., Beltekian, D. and Roser, M., 2021.     Coronavirus Pandemic (COVID-19).  <https://ourworldindata.org/covid-deaths> 
+ 
+ Portal Site of Official Statistics of Japan. 2021. Statistics about Road Traffic Traffic accidents situation Monthly 2021Aug. | File | Browse Statistics | Portal Site of Official Statistics of Japan. <https://www.e-stat.go.jp/en/stat-search/files?>
+
+## Refernces
+
+https://www.usnews.com/news/best-countries/japan. 2021.  <https://www.usnews.com/news/best-countries/japan> 
+
+Who.int. 2021. Coronavirus. <https://www.who.int/health-topics/coronavirus#tab=tab_1> 
+
+https://www.nature.com/articles/s41430-020-0677-5
+
+
+

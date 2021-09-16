@@ -198,15 +198,23 @@ Belgium has seen a record number of deaths despite it's population. Using the ab
   
 ## Data:
 
- https://ourworldindata.org/covid-deaths
 
- https://www.google.com/covid19/mobility/  
+ COVID-19 Community Mobility Report. 2021. COVID-19 Community Mobility Report. <https://www.google.com/covid19/mobility/> 
+
+ Ritchie, H., Mathieu, E., Rodés-Guirao, L., Appel, C., Giattino, C., Ortiz-Ospina, E., Hasell, J., Macdonald, B., Beltekian, D. and Roser, M., 2021.     Coronavirus Pandemic (COVID-19).  <https://ourworldindata.org/covid-deaths> 
+
   
 ## References:
 
- https://www.business-standard.com/article/companies/explained-why-the-google-mobility-reports-matter-to-policymakers-120070600808_1.html
-
- https://www.google.com/covid19/mobility/data_documentation.html?hl=en
+ Google.com. 2021.  <https://www.google.com/covid19/mobility/data_documentation.html?hl=en> 
  
- https://knowyourmeme.com/photos/1514752-google-doodles
+ 
+ https://knowyourmeme.com/photos/1514752-google-doodles. 2021. <https://knowyourmeme.com/photos/1514752-google-doodles> 
 
+
+  Mampatta, S., 2021. Explained: Why the Google Mobility Reports matter to policymakers.  <https://www.business-standard.com/article/companies/explained-why-the-google-mobility-reports-matter-to-policymakers-120070600808_1.html>
+  
+  Who.int. 2021. Coronavirus. <https://www.who.int/health-topics/coronavirus#tab=tab_1>
+
+
+ 

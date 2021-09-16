@@ -16,4 +16,4 @@ listing: posts
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Welcome to Sitha's Blog . ETC 5523 
+Welcome to Sitha's Blog 
