@@ -1,5 +1,5 @@
 ---
-title: "ETC5523 Communicating with Data"
+title: "Welcome to Sitha's Blog"
 description: "
   First blog post for ETC5523"
 author:
@@ -15,5 +15,3 @@ listing: posts
 ```{r setup, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-Welcome to Sitha's Blog 

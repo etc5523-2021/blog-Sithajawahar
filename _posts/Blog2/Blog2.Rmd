@@ -1,5 +1,5 @@
 ---
-title: "Debunking Conspiracies 101"
+title: "Debunking Conspiracies"
 description: "Is Japan as Healthy as it seems"
 date: "`r Sys.Date()`"
 output:
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 ```{css}
 .d-title {
-  background-image: url("images/flag.jpg");
+  background-image: url("images/flag.gif");
   background-repeat: no-repeat;
   background-position: right;
 }
@@ -27,13 +27,13 @@ body {
   background-color: off white;
 }
 h1 {
-  color: Red;
+  color: #D50303  ;
   padding: 15px;
   font-family:'Noto Sans', sans-serif;
 }
 
 h2 {
-  color: #DD7C73;
+  color: #DC4345 ;
   padding: 15px;
   font-family:'Noto Sans', sans-serif; 
 }
@@ -271,14 +271,14 @@ dr2 <- pivot_longer(death_rate, 2:3, names_to = "event" , values_to = "totals") 
 
  a1 <- ggdonutchart(dr1, "totals", label = "column", 
       fill = "event", color = "white",
-       palette = c("#E74C3C", "#F1948A", "#FC4E07"))+ ggtitle ("2020")+
+       palette = c("#20B2AA", "#003f5c"))+ ggtitle ("2020")+
     theme(legend.position = "bottom", legend.text = element_text(size = 15), legend.title = element_blank())+
     geom_label(aes(label = paste(percentage, "%", sep = "")), position = position_stack(vjust = 0.15))
  
  
 a2 <-  ggdonutchart(dr2, "totals", label = "column",
       fill = "event", color = "grey",
-       palette = c("#E74C3C", "#F1948A", "#FC4E07"))+ ggtitle ("2021")+
+       palette = c("#20B2AA", "#003f5c"))+ ggtitle ("2021")+
   theme(legend.position="none")+
    geom_label(aes(label = paste(percentage, "%", sep = "")), position = position_stack(vjust = 0.5))
    
