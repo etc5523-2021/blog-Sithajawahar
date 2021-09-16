@@ -1,5 +1,5 @@
 ---
-title: "Debunking Conspiracies 101"
+title: "Assessing Conspiracies"
 description: "Is Japan as Healthy as it seems"
 date: "`r Sys.Date()`"
 output:
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 ```{css}
 .d-title {
-  background-image: url("../../images/flag.jpg");
+  background-image: url("images/flag.gif");
   background-repeat: no-repeat;
   background-position: right;
 }
@@ -27,13 +27,13 @@ body {
   background-color: off white;
 }
 h1 {
-  color: Red;
+  color: #D50303  ;
   padding: 15px;
   font-family:'Noto Sans', sans-serif;
 }
 
 h2 {
-  color: #DD7C73;
+  color: #DC4345 ;
   padding: 15px;
   font-family:'Noto Sans', sans-serif; 
 }
@@ -55,6 +55,7 @@ library(readxl)
 library(ggpubr)
 library(hrbrthemes)
 library(gridExtra)
+library(plotly)
 
 ```
 
@@ -89,18 +90,15 @@ p <- pivot_longer(japan_clean, cols = cases:deaths, names_to = "status", values_
 ## Introduction 
 
 
-Right now, the world is facing a pandemic caused by the Corona virus. It is a virus that causes some kind of respiratory distress. The best way to protect oneself from contracting the virus is by staying away from crowded places, washing your hands or at least sanitizing them.
+Right now, the world is facing a pandemic caused by the Corona virus. It is a virus that causes respiratory distress. The best way to protect oneself from contracting the virus is by staying away from crowded places, washing your hands or at least sanitizing them.
 
 
-Japan is an island nation that in East Asia. It is one of the most literate and technically advanced nations. This blog takes a look at different events and how it affected the biggest sporting event. 
+Japan is an island nation in East Asia. It is one of the most literate and technically advanced nations. This blog takes a look at different conspiracies:
+- If hosting the Olympics caused an increase in Covid cases
+- How COVID toll compares with other things that kill us, in this case car accidents. 
 
 
 # Olympics during a pandemic and its effects
-
-```{r}
-
-
-```
 
 
 ```{r, echo = F, out.width = '100%', fig.align='right', fig.height=12 , fig.width=15}
@@ -110,7 +108,7 @@ knitr::include_graphics("images/olympics.jpg")
 ```
 
 
-The 28th Summer Olympics games was held in Tokyo, Japan. It was an event that was supposed to happen in July 2020. Because of the pandemic and toll it took on people worldwide was so magnanimous that the biggest sporting event was postponed to July 2020. The plots below show how the different pieces to the virus changed between the two years. 
+The 28th Summer Olympic games was held in Tokyo, Japan. It was an event that was supposed to happen in July 2020. Because of the pandemic and the toll it took on people around the globe, was so magnanimous that the biggest sporting event was postponed to July 2020. The plots below show how the different pieces to the virus changed between the two years. 
 
 ```{r}
 
@@ -140,28 +138,18 @@ p1 <- pivot_longer(japan1, cols = cases:vaccinations, names_to = "status", value
 wide <- pivot_wider(p1, names_from = year, 
               values_from = people) %>% 
   rename(covid2020 = "2020",
-         covid2021 = "2021") %>% 
-  mutate(covid2020 = (covid2020/10000)) %>% 
-  mutate(covid2021= (covid2021/10000))
+         covid2021 = "2021")
 
-
-data("wide")
-dumbbell_chart(
+plo1 <- dumbbell_chart(
   data = wide,
   x = status,
   y1 = covid2020,
   y2 = covid2021,
   point_colors = c("#FA2222", "white")) + 
   scale_y_continuous(labels = scales::comma) + 
-labs(
-    x = NULL,
-    y = "Count of people affected (in 10000's)",
-  )+
-  
-  
-theme(plot.background = element_rect(fill = "#F1F1F1"))+
-theme(
-  panel.background = element_rect(fill = "#040405",
+labs(x = NULL,
+    y = "Count of people affected (in 10000's)") +
+theme(panel.background = element_rect(fill = "#040405",
                                 colour = "lightblue",
                                 size = 0.5, linetype = "solid"),
   panel.grid.major = element_line(size = 0.5, linetype = 'solid',
@@ -171,19 +159,20 @@ theme(
   scale_y_continuous(breaks = seq(0, 120000000, 50000000))+
   scale_y_continuous(labels = scales::comma)+
   ggtitle("Covid changes in numbers over the years")
-  
+
+  ggplotly(plo1)
 
 ```
 
 
 This plot explains how Covid tests, cases and deaths have increased this year compared to last year. Vaccinations though have started only early this year thereby, not having showing anything for 2020. Even if the cases are on the rise, the fact that vaccinations are increasing at a higher rate is a positive sign for Japan. 
 
-Since a major part in the rise in cases is happening in 2021, is it related to the Olympics? Did the huge influx in athelets, volunteers, coaches, doctors et al. cause this rise?
+**Since a major part of the rise in cases is happening in 2021, is it related to the Olympics?** Did the huge influx in athletes, volunteers, coaches, doctors and such other personnel cause this rise?
 This is also a big question Japanese journalists are trying to address. 
 
 Since the games were supposed to be conducted last year, there have been personnel at the games village prepping for the actual event for over a year. The cases within persons involved in the games are higher this year than last for obvious reasons. 
 
-- The maximum cases were for the Contractors with almost 150 cases. They had the most chances for mobility within the country explainig the highest numbers. 
+- The maximum cases were for the Contractors with almost 300 cases in total. They had the most chances for mobility within the country explaining the highest numbers. 
 
 - Followed by athletes, coaches, physiotherapists, umpires and other such persons. This could also be because of travelling from various countries. 
 This however is puzzling because in both months the same number of people have been affected. 
@@ -206,16 +195,7 @@ p2 <- pivot_longer(olympics, cols = 2:6, names_to = "category", values_to = "cou
   mutate(category = recode(category, `Games-concerned personnel` = "Players et.al")) %>% 
   mutate(category = recode(category, `Tokyo 2020 Contractor` = "Contractors")) %>% 
   mutate(category = recode(category, `Tokyo 2020 employee` = "Employees"))
-  
 
-   ggplot(p2 ,mapping=aes(x=reorder(category, count),y=count))+
-  geom_bar(stat="identity", position="dodge", aes(fill=month))+
-  ggtitle("Olympic personnel affected") + theme_classic() +
-  theme(panel.background = element_rect(fill = "#E5E8E8")) +
-  scale_fill_manual(values=c("#45B39D",
-                             "#B0C4DE"))+
-   theme(legend.position = "bottom", legend.text = element_text(size = 8), legend.title = element_blank())+
-  coord_flip() + xlab("Staff")
  
    data("p2")
 pyramid_chart(data = p2, x = category, y = count, group = month,
@@ -237,7 +217,7 @@ knitr::include_graphics("images/story2.png")
 ```
 
 
-Japan is the longest - lived country. This was identified international comparison of recent mortality statistics. Making heart diseases and other major health issues a non-issue. But there are the two inevitable forms of fatalities, pandemics and road accidents. This part of the blog compares the number of deaths cause by accidents and covid. 
+Japan is the longest - lived country. This was identified international comparison of recent mortality statistics. Making heart diseases and other major health issues a non-issue. But there are the two inevitable forms of fatalities, pandemics and road accidents. This part of the blog compares the number of deaths caused by accidents and Covid. 
 The first plot, simply shows the trend of how many fatalities happens for every occurrence. 
 
 
@@ -284,14 +264,14 @@ dr2 <- pivot_longer(death_rate, 2:3, names_to = "event" , values_to = "totals") 
 
  a1 <- ggdonutchart(dr1, "totals", label = "column", 
       fill = "event", color = "white",
-       palette = c("#E74C3C", "#F1948A", "#FC4E07"))+ ggtitle ("2020")+
+       palette = c("#20B2AA", "#003f5c"))+ ggtitle ("2020")+
     theme(legend.position = "bottom", legend.text = element_text(size = 15), legend.title = element_blank())+
     geom_label(aes(label = paste(percentage, "%", sep = "")), position = position_stack(vjust = 0.15))
  
  
 a2 <-  ggdonutchart(dr2, "totals", label = "column",
       fill = "event", color = "grey",
-       palette = c("#E74C3C", "#F1948A", "#FC4E07"))+ ggtitle ("2021")+
+       palette = c("#20B2AA", "#003f5c"))+ ggtitle ("2021")+
   theme(legend.position="none")+
    geom_label(aes(label = paste(percentage, "%", sep = "")), position = position_stack(vjust = 0.5))
    
@@ -304,7 +284,7 @@ a2 <-  ggdonutchart(dr2, "totals", label = "column",
 
 
 
-These donut charts are talking about the the proportion of deaths in comparison to road accidents and Covid. In 2020, when the cases were still low, it can be observed that the ratio of cause of death is almost similar. 
+These donut charts are talking about the the proportion of deaths in term of road accidents and Covid. In 2020, when the cases were still low, it can be observed that the ratio of cause of death is almost similar. 
 But in 2021, with the cases on the rise, the ratio has completely changed. This is also evident because, as cases rise people will stay at home causing fewer people to be about on the road. 
 
 But if lock down is taken out the picture for just a moment, that change in ratio over a year is surprising.  
@@ -314,21 +294,57 @@ But if lock down is taken out the picture for just a moment, that change in rati
 
 ## Packages
 
+ Hadley Wickham and Jennifer Bryan (2019). readxl: Read Excel Files. R
+  package version 1.3.1. https://CRAN.R-project.org/package=readxl
+  
+  Wickham et al., (2019). Welcome to the tidyverse. Journal of Open
+  Source Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
 
 
 ## Data
 
+Alboukadel Kassambara (2020). ggpubr: 'ggplot2' Based PublicationReady Plots. R package version 0.4.0.
+  https://CRAN.R-project.org/package=ggpubr
+
+ Baptiste Auguie (2017). gridExtra: Miscellaneous Functions for "Grid"Graphics. R package version 2.3.
+  https://CRAN.R-project.org/package=gridExtra
+
+
+Bob Rudis (2020). hrbrthemes: Additional Themes, Theme Components and Utilities for 'ggplot2'. R package version 0.8.0.
+  https://CRAN.R-project.org/package=hrbrthemes
+
+C. Sievert. Interactive Web-Based Data Visualization with R, plotly,
+  and shiny. Chapman and Hall/CRC Florida, 2020.
+
+Garrett Grolemund, Hadley Wickham (2011). Dates and Times Made Easy with lubridate. Journal of Statistical Software, 40(3), 1-25. URL
+  https://www.jstatsoft.org/v40/i03/.
+  
+  H. Wickham. ggplot2: Elegant Graphics for Data Analysis.Springer-Verlag New York, 2016.
+
  Ritchie, H., Mathieu, E., Rodés-Guirao, L., Appel, C., Giattino, C., Ortiz-Ospina, E., Hasell, J., Macdonald, B., Beltekian, D. and Roser, M., 2021.     Coronavirus Pandemic (COVID-19).  <https://ourworldindata.org/covid-deaths> 
  
- Portal Site of Official Statistics of Japan. 2021. Statistics about Road Traffic Traffic accidents situation Monthly 2021Aug. | File | Browse Statistics | Portal Site of Official Statistics of Japan. <https://www.e-stat.go.jp/en/stat-search/files?>
+ Portal Site of Official Statistics of Japan. 2021. Statistics about Road Traffic Traffic accidents situation Monthly 2021Aug. | File | Browse  Statistics | Portal Site of Official Statistics of Japan. <https://www.e-stat.go.jp/en/stat-search/files?>
+ 
+ Thomas Neitmann (2020). ggcharts: Shorten the Distance from Data Visualization Idea to Actual Plot. R package version 0.2.1.
+  https://CRAN.R-project.org/package=ggcharts
 
 ## Refernces
 
-https://www.usnews.com/news/best-countries/japan. 2021.  <https://www.usnews.com/news/best-countries/japan> 
+  Bloomberg.com. 2021. Bloomberg - Are you a robot?. <https://www.bloomberg.com/opinion/articles/2021-03-01/covid-19-s-death-toll-compared-to-other-things-that-kill-us> 
 
-Who.int. 2021. Coronavirus. <https://www.who.int/health-topics/coronavirus#tab=tab_1> 
+ Htmlcolorcodes.com. 2021. <https://htmlcolorcodes.com/>
 
-https://www.nature.com/articles/s41430-020-0677-5
+ https://www.usnews.com/news/best-countries/japan. 2021.  <https://www.usnews.com/news/best-countries/japan> 
+
+ Who.int. 2021. Coronavirus. <https://www.who.int/health-topics/coronavirus#tab=tab_1> 
+
+ https://www.nature.com/articles/s41430-020-0677-5
+ 
+ W3schools.com. 2021. CSS Multiple Backgrounds. <https://www.w3schools.com/css/css3_backgrounds.asp> 
+ 
+
+
+
 
 
 
