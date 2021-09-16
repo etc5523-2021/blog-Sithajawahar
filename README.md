@@ -11,7 +11,7 @@ This assessment is due Fri Sep 3 2021 11.55PM AEST.
 My selected country is Belgium.
 
 
-The relevant blog post for this assessment is in https://sitha-jawahar-blogpost.netlify.app/blog1.html
+The relevant blog post for this assessment is in https://sitha-jawahar-blogpost.netlify.app/posts/blog1/
 
 - [x] Selected a country
 - [x] Website with R markdown 
@@ -29,7 +29,7 @@ This assessment is due Fri Sep 17 2021 11.55PM AEST.
 
 My selected country is Japan.
 
-The relevant blog post for this assessment is in [FILL].html
+The relevant blog post for this assessment is in https://sitha-jawahar-blogpost.netlify.app/posts/2021-09-16-blogjapan/
 
 - [x] Selected a new country
 - [x] Data Story 1
